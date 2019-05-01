@@ -3,11 +3,7 @@ class ItemsController < ApplicationController
 	before_action :authenticate_user!, except: [:index]
 
 	def index
-		# The if conditional ensures that the current_user value is not nil. If the if conditional
-		# is not there, there will be an error because the id method is being called on a nil value.
 		if user_signed_in?
-			# Selects the items where the user's id is the same as the current_user.
-			# Selects only the checklist items for the current_user.
 			@items = Item.where(:user_id => current_user.id).order("created_at DESC")
 		end
 	end
@@ -21,7 +17,6 @@ class ItemsController < ApplicationController
 
 	def create
 		@item = current_user.items.build(item_params)
-
 		if @item.save
 			redirect_to root_path
 		else
@@ -30,6 +25,7 @@ class ItemsController < ApplicationController
 	end
 
 	def edit
+		@categories = Category.all.map{|c| [ c.name, c.id ] }
 	end
 
 	def update
@@ -53,10 +49,11 @@ class ItemsController < ApplicationController
 
 	private
 		def item_params
-			params.require(:item).permit(:title, :description)
+			params.require(:item).permit(:title, :description, :category_id)
 		end
 
 		def find_item
 			@item = Item.find(params[:id])
 		end
+
 end
