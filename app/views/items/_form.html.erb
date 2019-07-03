@@ -1,8 +1,11 @@
 <%= simple_form_for @item do |f| %>
 	<%= f.input :title, label: "Item" %>
 	<%= f.input :description %>
-	<%= f.collection_select :category_id, Category.all, :id, :name, :prompt => "Select One" %>
-
+	<% if @category %>
+		<%= f.hidden_field(:category_id, value: @category.id) %>
+	<% else %>
+		<%= f.collection_select :category_id, Category.all, :id, :name, :prompt => "Select One" %>
+	<% end %%>
 	<%= f.button :submit, class: "btn btn-primary"%>
 
  <% end %>

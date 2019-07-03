@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :items
   has_many :categories, :through => :items
+  accepts_nested_attributes_for :items
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
 

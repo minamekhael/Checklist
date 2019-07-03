@@ -8,14 +8,15 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 <body>
-  
+
 
 	<nav class="navbar navbar-default">
 		<div class="container">
 			<div class="navbar-header">
-				<%= link_to "Checklist", root_path, class: "navbar-brand" %>
+				<%= link_to "Home", root_path, class: "navbar-brand" %>
+        <%= link_to "Checklist", root_path, class: "navbar-text", id: "1" %>
 			</div>
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav navbar-right">
 				<% if current_user.present? %>
 					<li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
 				<% else %>
@@ -24,7 +25,7 @@
 				<% end %>
 			</ul>
 			<% if user_signed_in? %>
-				<%= link_to "New Item", new_item_path, class: "navbar-text navbar-link navbar-right" %>
+			<a href>	<%= link_to "New Item", new_item_path, class: "navbar-text" %>
 			<% end %>
 		</div>
 	</nav>
@@ -32,7 +33,7 @@
 	<p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
 
-  <div class="container">
+  <div class="container" id="body">
 
   	<%= yield %>
 

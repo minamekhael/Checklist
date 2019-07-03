@@ -8,7 +8,6 @@
 						<div class="col-md-8">
 							<h2 style="opacity: 0.5;" class="item-title"><strike><%= link_to item.title, item %></strike></h2>
 							<p style="opacity: 0.5;" class="item-sub-title item-desc"><%= item.description %></p>
-							<td><%= link_to Category.find(item.category_id).name, category_path(item.category_id) %></td>
 							<p style="opacity: 0.5;" class="time-created-at item-sub-title">Completed <%= time_ago_in_words(item.completed_at) %> ago</p>
 						</div>
 						<div class="col-md-2">
@@ -25,9 +24,11 @@
 				<% else %>
 					<div class="row item">
 						<div class="col-md-8">
-							<h2 class="item-title"><%= item.title %></h2>
+							<h2 class="item-title"><%= link_to item.title, edit_item_path(@items) %></h2>
 							<p class="item-sub-title item-desc"><%= item.description %></p>
-							<td><%= link_to Category.find(item.category_id).name, category_path(item.category_id) %></td>
+							<p class="category">
+							<%= link_to Category.find(item.category_id).name, category_items_url(item.category_id) %>
+							</p>
 							<p style="opacity: 0.5;" class="time-created-at item-sub-title">Created <%= time_ago_in_words(item.created_at) %> ago</p>
 						</div>
 						<div class="col-md-2">
@@ -46,7 +47,8 @@
 
 		<% end %>
 		<br>
-		<%= link_to "New Item", new_item_path, class: "btn btn-primary"%>
+		<%= link_to "New Item", @category ? new_category_item_path(@category) : new_item_path, class: "btn btn-primary"%>
+		<%= link_to "Back", root_path, class: "btn btn-primary" %>
 		</br>
 	</div>
 <% else %>
