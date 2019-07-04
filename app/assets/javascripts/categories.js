@@ -4,7 +4,7 @@ document.addEventListener("turbolinks:load", function() {
       $('#2').on('click', (e) => {
         e.preventDefault()
         history.pushState(null, null, "categories")
-          $('#body').html('<h1>Find Items by Category</h1>')
+          $('#body').html('<h1>Category List</h1>')
           fetch('/categories.json')
           .then(res => res.json())
           .then (categories => {
