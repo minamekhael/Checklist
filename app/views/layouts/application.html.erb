@@ -15,6 +15,7 @@
 			<div class="navbar-header">
 				<%= link_to "Home", root_path, class: "navbar-brand" %>
         <%= link_to "Checklist", root_path, class: "navbar-text", id: "1" %>
+        <%= link_to "Categories", categories_url, class: "navbar-text", id:"2" %>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<% if current_user.present? %>

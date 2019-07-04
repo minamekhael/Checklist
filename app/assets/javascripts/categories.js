@@ -1,9 +1,23 @@
 document.addEventListener("turbolinks:load", function() {
 
+    const categoryIndex = () => {
+      $('#2').on('click', (e) => {
+        e.preventDefault()
+        history.pushState(null, null, "categories")
+          $('#body').html('<h1>Find Items by Category</h1>')
+          fetch('/categories.json')
+          .then(res => res.json())
+          .then (categories => {
+              $('#body').append(categoryTypes)
+              })
+            })
+          }
+    categoryIndex()
+
     const bindClickHandlers = () => {
       $('.category').on('click', (e) => {
         e.preventDefault()
-        let id = e.target.href.split('/') [4]
+        let id = parseInt(e.target.href.split('/') [4])
           fetch(`/categories.json`)
             .then(res => res.json())
             .then (categories => {
@@ -11,7 +25,7 @@ document.addEventListener("turbolinks:load", function() {
               $('#body').html('')
               categories.forEach(category =>{
                 let newCategory = new Category(category)
-                if(newCategory.id===parseInt(id) ){
+                if(newCategory.id===id){
                   let categoryHtml = newCategory.formatIndex()
                   $('#body').append(categoryHtml)
                   $('#body').append(newCategory.renderItems())
@@ -20,6 +34,16 @@ document.addEventListener("turbolinks:load", function() {
             })
          })
 }
+
+  var categoryTypes =['Travel ',
+    'Finance ',
+    'Home ',
+    'Shopping ',
+    'Favors ',
+    'Other ']
+
+  categoryTypes.sort()
+  console.log(categoryTypes)
 
   bindClickHandlers()
 
@@ -30,7 +54,9 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   Category.prototype.formatIndex = function(){
-    let categoryHtml = `<h1> ${this.name} </h1>`
+    let categoryHtml =`
+
+    `
     return categoryHtml
   }
 
@@ -38,9 +64,7 @@ document.addEventListener("turbolinks:load", function() {
     let itemHtml = ''
     this.items.forEach(item => {
       itemHtml += `<p> ${item.title} </p>`
-
     })
-    console.log('item html stuff', itemHtml)
     return itemHtml
   }
 
