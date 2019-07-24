@@ -4,15 +4,19 @@ document.addEventListener("turbolinks:load", function() {
       $('#2').on('click', (e) => {
         e.preventDefault()
         history.pushState(null, null, "categories")
-          $('#body').html('<h1>Category List</h1>')
-          fetch('/categories.json')
-          .then(res => res.json())
-          .then (categories => {
-              $('#body').append(categoryTypes)
-              })
+        fetch(`/items.json`)
+        .then(res => res.json())
+        .then (items =>{
+          $('#body').html('<h1>Categories List</h1>')
+          items.sort((a, b) => (a.category.name > b.category.name) ? 1 : -1)
+          items.forEach(item => {
+            let itemHtml = `<p>${item.category.name}</p>`
+            $('#body').append(itemHtml)
             })
-          }
-    categoryIndex()
+          })
+        })
+    }
+
 
     const bindClickHandlers = () => {
       $('.category').on('click', (e) => {
@@ -35,15 +39,7 @@ document.addEventListener("turbolinks:load", function() {
          })
 }
 
-  var categoryTypes =['Travel ',
-    'Finance ',
-    'Home ',
-    'Shopping ',
-    'Favors ',
-    'Other ']
-
-  categoryTypes.sort()
-  console.log(categoryTypes)
+  categoryIndex()
 
   bindClickHandlers()
 
@@ -55,7 +51,7 @@ document.addEventListener("turbolinks:load", function() {
 
   Category.prototype.formatIndex = function(){
     let categoryHtml =`
-
+      <p>${this.name}</p>
     `
     return categoryHtml
   }
